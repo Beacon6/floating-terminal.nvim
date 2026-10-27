@@ -3,41 +3,26 @@ local M = {}
 ---@class (exact) State
 ---@field window integer ID of a window displaying the terminal
 ---@field bufnr  integer ID of a buffer containing terminal data
-
----@class Config
----@field width_factor  number Percentage of screen width
----@field height_factor number Percentage of screen height
-
----@type State
 local state = {
     window = -1,
     bufnr  = -1
 }
 
----@type Config
-local defaults = {
+---@class (exact) Config
+---@field width_factor  number | nil Percentage of screen width
+---@field height_factor number | nil Percentage of screen height
+local config = {
     width_factor  = 0.8,
-    height_factor = 0.8
+    height_factor = 0.8,
 }
 
----@type Config
-local config
-
----@generic T
----@param field T
----@param default T
----@return T
-local function get(field, default)
-    if field ~= nil then
-        return field
-    end
-    return default
-end
-
----@param opts Config
+---@param opts Config | nil
+---@return nil
 function M:setup(opts)
-    config.height_factor = get(opts.height_factor, defaults.height_factor)
-    config.height_factor = get(opts.height_factor, defaults.height_factor)
+    if opts == nil then return end
+    for k, v in pairs(opts) do
+        config[k] = v
+    end
 end
 
 function M:toggle_floating_terminal()
