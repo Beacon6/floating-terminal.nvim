@@ -8,12 +8,38 @@ local state = {
     bufnr  = -1
 }
 
+---@alias Border
+---| "bold"
+---| "double"
+---| "none"
+---| "rounded"
+---| "shadow"
+---| "single"
+---| "solid"
+---| string[]
+
+---@alias Position
+---| "left"
+---| "center"
+---| "right"
+
 ---@class (exact) Config
----@field width_factor  number | nil Percentage of screen width
----@field height_factor number | nil Percentage of screen height
+---@field width_factor  number   | nil Percentage of screen width
+---@field height_factor number   | nil Percentage of screen height
+---@field border        Border   | nil Window border style
+---@field title         string   | nil Window title
+---@field title_pos     Position | nil Window title position
+---@field footer        string   | nil Window footer
+---@field footer_pos    Position | nil Window footer position
+
 local config = {
     width_factor  = 0.8,
     height_factor = 0.8,
+    border        = vim.o.winborder,
+    title         = "",
+    title_pos     = "left",
+    footer        = "",
+    footer_pos    = "left"
 }
 
 ---@param opts Config | nil
@@ -47,7 +73,14 @@ function M:toggle_floating_terminal()
         width = width,
         height = height,
         col = x,
-        row = y
+        row = y,
+        -- NOTE: Neovim type for "border" does not include "bold"
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        border = config.border,
+        title = config.title,
+        title_pos = config.title_pos,
+        footer = config.footer,
+        footer_pos = config.footer_pos
     })
     if vim.api.nvim_get_option_value("buftype", { buf = state.bufnr }) ~= "terminal" then
         vim.cmd.term()
