@@ -18,6 +18,8 @@ local state = {
 ---| "solid"
 ---| string[]
 
+---@alias Label string | string[][]
+
 ---@alias Position
 ---| "left"
 ---| "center"
@@ -27,11 +29,10 @@ local state = {
 ---@field width_factor  number   | nil Percentage of screen width
 ---@field height_factor number   | nil Percentage of screen height
 ---@field border        Border   | nil Window border style
----@field title         string   | nil Window title
+---@field title         Label    | nil Window title text
 ---@field title_pos     Position | nil Window title position
----@field footer        string   | nil Window footer
+---@field footer        Label    | nil Window footer text
 ---@field footer_pos    Position | nil Window footer position
-
 local config = {
     width_factor  = 0.8,
     height_factor = 0.8,
@@ -51,6 +52,7 @@ function M:setup(opts)
     end
 end
 
+---@return nil
 function M:toggle_floating_terminal()
     if vim.api.nvim_win_is_valid(state.window) then
         vim.api.nvim_win_hide(state.window)
