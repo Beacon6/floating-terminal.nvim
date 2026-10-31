@@ -45,7 +45,7 @@ local config = {
 
 ---@param opts Config | nil
 ---@return nil
-function M:setup(opts)
+M.setup = function(opts)
     if opts == nil then return end
     for k, v in pairs(opts) do
         config[k] = v
@@ -53,7 +53,7 @@ function M:setup(opts)
 end
 
 ---@return nil
-function M:toggle_floating_terminal()
+M.toggle_floating_terminal = function()
     if vim.api.nvim_win_is_valid(state.window) then
         vim.api.nvim_win_hide(state.window)
         state.window = -1
@@ -90,7 +90,7 @@ function M:toggle_floating_terminal()
 end
 
 vim.api.nvim_create_user_command("FloatingTerminal", function()
-    M:toggle_floating_terminal()
+    M.toggle_floating_terminal()
 end, {})
 
 return M

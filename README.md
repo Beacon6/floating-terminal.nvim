@@ -7,7 +7,7 @@ Exposes a single command (`vim.cmd.FloatingTerminal`) for toggling the window.
 
 ## Installation
 
-Install the usual way using your favourite package manager:
+Install using your package manager of choice:
 <details>
   <summary>lazy.nvim</summary>
 
@@ -16,7 +16,7 @@ Install the usual way using your favourite package manager:
     "Beacon6/floating-terminal.nvim",
     config = function()
         local floating_terminal = require("floating-terminal")
-        floating_terminal:setup()
+        floating_terminal.setup()
 
         vim.keymap.set({ "n", "t" }, "`", vim.cmd.FloatingTerminal)
     end
@@ -26,9 +26,9 @@ Install the usual way using your favourite package manager:
 
 ## Configuration
 
-You can override the default configuration in the `setup()` method.
+You can override the default configuration in the `setup()` function:
 <details>
-  <summary>Default configuration</summary>
+  <summary>Defaults</summary>
 
 ```lua
 ---@class (exact) Config
